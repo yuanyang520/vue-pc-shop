@@ -12,17 +12,19 @@
       <!-- 页面主体区域 -->
       <el-container>
         <!-- 侧边栏 -->
-        <el-aside :width="isCollapse ? '64px':'200px'">
+        <el-aside :width="isCollapse ? '64px':'250px'">
            <!-- 伸缩侧边栏按钮 -->
           <div class="toggle-button" @click="open()"><i class="el-icon-menu"></i></div>
           <!-- 侧边栏菜单 -->
           <el-menu
+            router
            :collapse="isCollapse"
            :collapse-transition="false"
             unique-opened
             background-color="#333744"
             text-color="#fff"
             active-text-color="#ffd04b"
+            default-active:activePath
             >
             <!-- 一级菜单 -->
             <el-submenu :index="item.id.toString()" v-for="(item, index) in list" :key="item.id">
@@ -34,7 +36,7 @@
                 <span>{{item.authName}}</span>
               </template>
               <!-- 二级子菜单 -->
-              <el-menu-item :index="chitem.id.toString()" v-for="chitem in item.children" :key="chitem.id">
+              <el-menu-item :index="'/'+chitem.path" v-for="chitem in item.children" :key="chitem.id" @click="saveNavState('/'+chitem.path)">
                 <!-- 二级菜单模板 -->
                 <template slot="title">
                   <!-- 图标 -->
@@ -47,7 +49,7 @@
           </el-menu>
         </el-aside>
         <!-- 主体结构 -->
-        <el-main>欢迎光临</el-main>
+        <el-main><router-view></router-view></el-main>
       </el-container>
     </el-container>
 </template>
@@ -58,12 +60,14 @@ export default {
     return {
       list: null,
       isCollapse: true,
-      iconsObj: ['el-icon-s-custom', 'el-icon-s-check', 'el-icon-shopping-bag-1', 'el-icon-s-claim', 'el-icon-s-data']
+      iconsObj: ['el-icon-s-custom', 'el-icon-s-check', 'el-icon-shopping-bag-1', 'el-icon-s-claim', 'el-icon-s-data'],
+      activePath: ''
     }
   },
 
   created () {
     this.getlist()
+    this.activePath = window.sessionStorage.getItem('activePath')
   },
 
   methods: {
@@ -74,10 +78,14 @@ export default {
     async getlist () {
       const { data: res } = await this.$http.get('menus')
       this.list = res.data
-      console.log(this.list)
     },
     open () {
       this.isCollapse = !this.isCollapse
+    },
+    saveNavState (path) {
+      // 点击二级菜单的时候保存被点击的二级菜单信息
+      window.sessionStorage.setItem('activePath', path)
+      this.activePath = path
     }
   },
 
@@ -92,7 +100,6 @@ export default {
 }
 .el-header{
   position: relative;
-  height: 100px;
   background-color:#373D41;
   button{
       position: absolute;
@@ -120,5 +127,8 @@ export default {
     font-size: 20px;
     color:#fff
   }
+}
+.el-menu{
+  border-right: 0;
 }
 </style>
