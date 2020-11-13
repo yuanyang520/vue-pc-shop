@@ -250,9 +250,6 @@ export default {
 </script>
 
 <style scoped lang='less'>
-.el-breadcrumb{
-    margin-bottom:20px;
-}
 .el-row{
     margin-bottom:20px;
 }
