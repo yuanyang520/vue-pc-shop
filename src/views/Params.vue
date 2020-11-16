@@ -59,7 +59,17 @@
     <!-- 静态属性表格 -->
     <el-table :data="onlyTableData" border stripe>
       <!-- 展开行 -->
-      <el-table-column type="expand"></el-table-column>
+      <el-table-column type="expand">
+        <template slot-scope="scope">
+            <!-- 循环生成的el-tag -->
+            <el-tag closable v-for="(item, index) in scope.row.attr_vals" :key="index" @close="handleClose(index,scope.row)">{{item}}</el-tag>
+            <!-- 输入框 -->
+            <el-input class="input-new-tag" v-if="scope.row.inputVisible" v-model="scope.row.inputValue" ref="saveTagInput" size="small"  @keyup.enter.native="handleInputConfirm(scope.row)" @blur="handleInputConfirm(scope.row)">
+            </el-input>
+            <!-- 添加按钮 -->
+            <el-button v-else class="button-new-tag" @click="showInput(scope.row)" >+ New Tag</el-button>
+         </template>
+      </el-table-column>
       <!-- 索引列 -->
       <el-table-column type="index"></el-table-column>
       <el-table-column label="属性名称" prop="attr_name"></el-table-column>
