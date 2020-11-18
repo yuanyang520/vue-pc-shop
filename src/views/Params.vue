@@ -154,6 +154,8 @@ export default {
     async cascaderChange () {
       if (this.selectedCateKeys.length !== 3) {
         this.selectedCateKeys = []
+        this.manyTableData = []
+        this.onlyTableData = []
       }
       const { data: res } = await this.$http.get(`categories/${this.getCateId()}/attributes`, { params: { sel: this.activeName } })
       if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
@@ -167,6 +169,12 @@ export default {
       } else if (this.activeName === 'only') {
         this.onlyTableData = res.data
       }
+      // this.manyTableData.forEach(item => {
+      //   const vals = item.attr_vals = item.attr_vals ? item.attr_vals.split(' ') : []
+      //   this.$set(item, 'attr_vals', vals)
+      //   this.$set(item, 'inputVisible', false)
+      //   this.$set(item, 'inputValue', '')
+      // })
     },
     handleTabClick () {
       this.cascaderChange()

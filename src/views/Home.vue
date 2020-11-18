@@ -61,7 +61,8 @@ export default {
       list: null,
       isCollapse: true,
       iconsObj: ['el-icon-s-custom', 'el-icon-s-check', 'el-icon-shopping-bag-1', 'el-icon-s-claim', 'el-icon-s-data'],
-      activePath: ''
+      activePath: '',
+      goodId: 0
     }
   },
 
