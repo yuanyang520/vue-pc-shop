@@ -8,6 +8,9 @@ import Right from '../views/Rights'
 import Roles from '../views/Roles'
 import Cate from '../views/Cate'
 import Params from '../views/Params'
+import GoodList from '../views/Goods'
+import AddGood from '../views/AddGood'
+import EditGood from '../views/EditGood'
 
 Vue.use(VueRouter)
 
@@ -50,6 +53,18 @@ const routes = [
       {
         path: '/params',
         component: Params
+      },
+      {
+        path: '/goods',
+        component: GoodList
+      },
+      {
+        path: '/goods/addgood',
+        component: AddGood
+      },
+      {
+        path: '/goods/editgood',
+        component: EditGood
       }
     ]
   }
