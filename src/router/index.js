@@ -12,6 +12,7 @@ import GoodList from '../views/Goods'
 import AddGood from '../views/AddGood'
 import EditGood from '../views/EditGood'
 import Order from '../views/Order'
+import Report from '../views/Report'
 
 Vue.use(VueRouter)
 
@@ -70,6 +71,10 @@ const routes = [
       {
         path: '/orders',
         component: Order
+      },
+      {
+        path: '/reports',
+        component: Report
       }
     ]
   }
